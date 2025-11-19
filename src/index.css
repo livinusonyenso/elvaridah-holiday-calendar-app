@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Your custom layers stay exactly the same */
+@layer base {
+  :root {
+    color-scheme: light dark;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  a {
+    @apply font-medium text-blue-600 hover:text-blue-500;
+  }
+
+  button {
+    @apply rounded-lg px-3 py-2 font-medium transition-colors duration-200;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-900 hover:bg-gray-300 disabled:opacity-50;
+  }
+
+  .input-base {
+    @apply w-full rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors duration-200 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20;
+  }
+
+  .form-error {
+    @apply text-sm text-red-600 mt-1;
+  }
+}
