@@ -1,32 +1,36 @@
-import { Calendar } from '../components/calendar'
-import { useAuth } from '../context/auth-context'
-
+import { Calendar } from "../components/calendar";
+import { useAuth } from "../context/auth-context";
+import "./DashboardPage.css"
 interface DashboardPageProps {
-  onNavigate: (page: 'login' | 'register' | 'dashboard') => void
+  onNavigate: (page: "login" | "register" | "dashboard") => void;
 }
 
 export function DashboardPage({ onNavigate }: DashboardPageProps) {
-  const { user, logout } = useAuth()
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
-    logout()
-    onNavigate('login')
-  }
+    logout();
+    onNavigate("login");
+  };
 
   return (
-    <div className="dashboard-page">
-      <header className="dashboard-header">
-        <div className="header-content">
-          <h1>Google Calendar Dashboard</h1>
-          <p className="welcome-text">Welcome, {user?.name}!</p>
+    <div className="dash-container">
+      {/* TOP HEADER */}
+      <header className="dash-header">
+        <div className="dash-header-left">
+          <h1 className="dash-title">Google Calendar Dashboard</h1>
+          <p className="dash-welcome">Welcome, {user?.name} 👋</p>
         </div>
-        <button onClick={handleLogout} className="logout-button">
+
+        <button onClick={handleLogout} className="dash-logout-btn">
           Logout
         </button>
       </header>
-      <main className="dashboard-main">
+
+      {/* MAIN CONTENT */}
+      <main className="dash-main">
         <Calendar />
       </main>
     </div>
-  )
+  );
 }
