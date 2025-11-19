@@ -21,14 +21,31 @@ export function GoogleCalendar({ calendarId }: GoogleCalendarProps) {
     setHolidayEvents(filtered);
   }, [currentDate]);
 
-  const getCalendarUrl = () => {
-    const src = calendarId
-      ? encodeURIComponent(calendarId)
-      : "en.ng%23holiday%40group.v.calendar.google.com";
+ const getCalendarUrl = () => {
+  const src = calendarId
+    ? encodeURIComponent(calendarId)
+    : "en.ng%23holiday%40group.v.calendar.google.com";
 
-    // Elvaridah brand color (#CCA45C)
-    return `https://calendar.google.com/calendar/embed?src=${src}&ctz=Africa%2FLagos&mode=MONTH&color=%23CCA45C&bgcolor=%23ffffff`;
-  };
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth(); // 0–11
+
+  // First day of month
+  const start = new Date(year, month, 1);
+  // Last day of month
+  const end = new Date(year, month + 1, 0);
+
+  // Convert to YYYYMMDD format
+  const format = (d: Date) =>
+    `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, "0")}${String(
+      d.getDate()
+    ).padStart(2, "0")}`;
+
+  const startStr = format(start);
+  const endStr = format(end);
+
+  return `https://calendar.google.com/calendar/embed?src=${src}&ctz=Africa%2FLagos&color=%23CCA45C&bgcolor=%23ffffff&mode=MONTH&dates=${startStr}/${endStr}`;
+};
+
 
   const prevMonth = () => {
     setCurrentDate(
@@ -78,13 +95,6 @@ export function GoogleCalendar({ calendarId }: GoogleCalendarProps) {
             className="gc-iframe"
             title="Google Calendar"
           />
-        </div>
-
-        <div className="gc-note">
-          <p>
-            <strong>Note:</strong> Showing Nigeria public holidays. Add your
-            Google Calendar ID to load your personal events.
-          </p>
         </div>
 
         <div className="gc-overlay">
