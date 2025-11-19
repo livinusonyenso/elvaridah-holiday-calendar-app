@@ -32,7 +32,7 @@ export function GoogleCalendar({ calendarId }: GoogleCalendarProps) {
     const year = currentDate.getFullYear()
     const month = currentDate.getMonth() + 1
     
-    return `https://calendar.google.com/calendar/embed?src=${src}&ctz=Africa%2FLagos&mode=MONTH&wkst=1&bgcolor=%23ffffff&color=%23A32929&dates=${year}${String(month).padStart(2, '0')}01%2F${year}${String(month).padStart(2, '0')}31`
+return `https://calendar.google.com/calendar/embed?src=${src}&ctz=Africa%2FLagos&mode=MONTH&wkst=1&bgcolor=%23ffffff&color=%23A32929`
   }
 
   const previousMonth = () => {
