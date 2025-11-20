@@ -18,10 +18,11 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
     const newErrors: typeof errors = {}
 
     if (!validateEmail(email)) {
-      newErrors.email = 'Please enter a valid email'
+      newErrors.email = 'please enter a valid email'   
     }
     if (!validatePassword(password)) {
-      newErrors.password = 'Password must be at least 8 characters with uppercase, lowercase, and numbers'
+      newErrors.password =
+        'Password must be at least 8 characters with uppercase, lowercase, and numbers'
     }
 
     if (Object.keys(newErrors).length > 0) {
