@@ -12,24 +12,20 @@ function AppContent() {
   const { isAuthenticated } = useAuth()
   const [currentPage, setCurrentPage] = useState<Page>('login')
 
-  useEffect(() => {
-    // Redirect to dashboard if already authenticated
-    if (isAuthenticated) {
-      setCurrentPage('dashboard')
-    } else {
-      setCurrentPage('login')
-    }
-  }, [isAuthenticated])
+  // Determine default page based on auth state
+  const page = isAuthenticated ? 'dashboard' : currentPage
 
   return (
     <div className="app-container">
-      {currentPage === 'login' && (
+      {page === 'login' && (
         <LoginPage onNavigate={(page) => setCurrentPage(page)} />
       )}
-      {currentPage === 'register' && (
+
+      {page === 'register' && (
         <RegisterPage onNavigate={(page) => setCurrentPage(page)} />
       )}
-      {currentPage === 'dashboard' && (
+
+      {page === 'dashboard' && (
         <AuthGuard>
           <DashboardPage onNavigate={(page) => setCurrentPage(page)} />
         </AuthGuard>
@@ -37,6 +33,7 @@ function AppContent() {
     </div>
   )
 }
+
 
 function App() {
   return (

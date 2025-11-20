@@ -140,8 +140,7 @@ describe("GoogleCalendar", () => {
     // Re-query the iframe
     const iframe2 = screen.getByTitle("Google Calendar")
     
-    // The iframe should have been re-rendered (different key)
-    // We verify this by checking the src has different dates
+  
     expect(iframe2.getAttribute("src")).not.toBe(iframe1.getAttribute("src"))
   })
 

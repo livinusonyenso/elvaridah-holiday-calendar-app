@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 import { NIGERIA_HOLIDAYS } from "../constants/holidays";
 import "./GoogleCalendar.css";
 
@@ -9,43 +9,35 @@ interface GoogleCalendarProps {
 export function GoogleCalendar({ calendarId }: GoogleCalendarProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [holidayEvents, setHolidayEvents] = useState<
-    Array<{ date: string; name: string }>
-  >([]);
 
-  useEffect(() => {
+  const holidayEvents = useMemo(() => {
     const currentYear = currentDate.getFullYear();
-    const filtered = NIGERIA_HOLIDAYS.filter((h) => {
+    return NIGERIA_HOLIDAYS.filter((h) => {
       return new Date(h.date).getFullYear() === currentYear;
     });
-    setHolidayEvents(filtered);
   }, [currentDate]);
 
- const getCalendarUrl = () => {
-  const src = calendarId
-    ? encodeURIComponent(calendarId)
-    : "en.ng%23holiday%40group.v.calendar.google.com";
+  const getCalendarUrl = () => {
+    const src = calendarId
+      ? encodeURIComponent(calendarId)
+      : "en.ng%23holiday%40group.v.calendar.google.com";
 
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth(); // 0–11
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
 
-  // First day of month
-  const start = new Date(year, month, 1);
-  // Last day of month
-  const end = new Date(year, month + 1, 0);
+    const start = new Date(year, month, 1);
+    const end = new Date(year, month + 1, 0);
 
-  // Convert to YYYYMMDD format
-  const format = (d: Date) =>
-    `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, "0")}${String(
-      d.getDate()
-    ).padStart(2, "0")}`;
+    const format = (d: Date) =>
+      `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, "0")}${String(
+        d.getDate()
+      ).padStart(2, "0")}`;
 
-  const startStr = format(start);
-  const endStr = format(end);
+    const startStr = format(start);
+    const endStr = format(end);
 
-  return `https://calendar.google.com/calendar/embed?src=${src}&ctz=Africa%2FLagos&color=%23CCA45C&bgcolor=%23ffffff&mode=MONTH&dates=${startStr}/${endStr}`;
-};
-
+    return `https://calendar.google.com/calendar/embed?src=${src}&ctz=Africa%2FLagos&color=%23CCA45C&bgcolor=%23ffffff&mode=MONTH&dates=${startStr}/${endStr}`;
+  };
 
   const prevMonth = () => {
     setCurrentDate(
@@ -126,9 +118,10 @@ export function GoogleCalendar({ calendarId }: GoogleCalendarProps) {
         </h3>
 
         <ul className="gc-holiday-list">
-          {currentMonthHolidays.map((h) => {
+          {holidayEvents.map((h) => {
             const sameMonth =
               new Date(h.date).getMonth() === currentDate.getMonth();
+
             return (
               <li
                 key={h.date}
