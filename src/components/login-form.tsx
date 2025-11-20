@@ -18,7 +18,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
     const newErrors: typeof errors = {}
 
     if (!validateEmail(email)) {
-      newErrors.email = 'Please enter a valid email'   // ✅ FIXED
+      newErrors.email = 'please enter a valid email'   
     }
     if (!validatePassword(password)) {
       newErrors.password =
