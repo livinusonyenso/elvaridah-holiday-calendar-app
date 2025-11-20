@@ -118,7 +118,7 @@ export function GoogleCalendar({ calendarId }: GoogleCalendarProps) {
         </h3>
 
         <ul className="gc-holiday-list">
-          {holidayEvents.map((h) => {
+          {currentMonthHolidays.map((h) => {
             const sameMonth =
               new Date(h.date).getMonth() === currentDate.getMonth();
 
